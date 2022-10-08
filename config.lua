@@ -186,7 +186,37 @@ lvim.plugins = {
   {
     'christoomey/vim-tmux-navigator',
   },
+  {
+    'simrat39/symbols-outline.nvim',
+    cmd = "SymbolsOutline",
+    config = function()
+      require("symbols-outline").setup()
+
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "css", "scss", "html", "javascript", "javascriptreact", "typescriptreact" }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  }
 }
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "css", "scss" },
+--   -- enable wrap mode for json files only
+--   command = "ColorizerToggle",
+-- })
+
+
 -- Additional Plugins
 -- lvim.plugins = {
 --     {"folke/tokyonight.nvim"},
@@ -215,3 +245,70 @@ lspconfig.emmet_ls.setup({
   -- on_attach = on_attach,
   filetypes = { "html", "css", "javascript", "typescriptreact", "javascriptreact" },
 })
+
+local opts = {
+  highlight_hovered_item = true,
+  show_guides = true,
+  auto_preview = false,
+  position = 'right',
+  relative_width = true,
+  width = 25,
+  auto_close = false,
+  show_numbers = false,
+  show_relative_numbers = false,
+  show_symbol_details = true,
+  preview_bg_highlight = 'Pmenu',
+  autofold_depth = nil,
+  auto_unfold_hover = true,
+  fold_markers = { '', '' },
+  wrap = false,
+  keymaps = { -- These keymaps can be a string or a table for multiple keys
+    close = { "<Esc>", "q" },
+    goto_location = "<Cr>",
+    focus_location = "o",
+    hover_symbol = "<C-space>",
+    toggle_preview = "K",
+    rename_symbol = "r",
+    code_actions = "a",
+    fold = "h",
+    unfold = "l",
+    fold_all = "W",
+    unfold_all = "E",
+    fold_reset = "R",
+  },
+  lsp_blacklist = {},
+  symbol_blacklist = {},
+  symbols = {
+    File = { icon = "", hl = "TSURI" },
+    Module = { icon = "", hl = "TSNamespace" },
+    Namespace = { icon = "", hl = "TSNamespace" },
+    Package = { icon = "", hl = "TSNamespace" },
+    Class = { icon = "𝓒", hl = "TSType" },
+    Method = { icon = "ƒ", hl = "TSMethod" },
+    Property = { icon = "", hl = "TSMethod" },
+    Field = { icon = "", hl = "TSField" },
+    Constructor = { icon = "", hl = "TSConstructor" },
+    Enum = { icon = "ℰ", hl = "TSType" },
+    Interface = { icon = "ﰮ", hl = "TSType" },
+    Function = { icon = "", hl = "TSFunction" },
+    Variable = { icon = "", hl = "TSConstant" },
+    Constant = { icon = "", hl = "TSConstant" },
+    String = { icon = "𝓐", hl = "TSString" },
+    Number = { icon = "#", hl = "TSNumber" },
+    Boolean = { icon = "⊨", hl = "TSBoolean" },
+    Array = { icon = "", hl = "TSConstant" },
+    Object = { icon = "⦿", hl = "TSType" },
+    Key = { icon = "🔐", hl = "TSType" },
+    Null = { icon = "NULL", hl = "TSType" },
+    EnumMember = { icon = "", hl = "TSField" },
+    Struct = { icon = "𝓢", hl = "TSType" },
+    Event = { icon = "🗲", hl = "TSType" },
+    Operator = { icon = "+", hl = "TSOperator" },
+    TypeParameter = { icon = "𝙏", hl = "TSParameter" }
+  }
+}
+lvim.builtin.which_key.mappings.l = vim.tbl_extend("keep", lvim.builtin.which_key.mappings.l,
+  {
+    o = { "<cmd>SymbolsOutline<cr>", "Open Outline" }
+  }
+)
