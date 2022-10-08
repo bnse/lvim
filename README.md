@@ -14,6 +14,17 @@ bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/
 cd ~/.config/ && gh repo clone github.com/bnse/lvim
 ```
 
+```lvim
+:PackerInstall
+:PackerUpdate
+:Mason     move cursor on the select, and press `u` to update 
+:TSUpdate 
+```
+
+- `Packer`: Package Manager.
+- `Mason`:  Plugin Manager.
+- `TSInstall`: more treesitter parsers.
+
 ```~/.config/lvim/config.lua
 lvim.plugins = {
   {
@@ -53,4 +64,21 @@ lvim.plugins = {
 lvim.leader = "space"
 
 lvim.colorscheme = "gruvbox"
+```
+
+## Usage on lvim
+
+```vim
+:PackerInstall
+:PackerClean
+:PackerUpdate
+
+
+:Mason
+:MasonInstall gopls
+:MasonInstall rescript-lsp
+
+:TSInstall go
+:TSInstall rescript
+:TSUpdate
 ```
