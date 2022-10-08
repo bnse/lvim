@@ -58,15 +58,19 @@ lvim.plugins = {
 }
 ```
 
-## shortcut
+## Usage on lvim
+
+- shortcut
 
 ```config.lua
 lvim.leader = "space"
-
-lvim.colorscheme = "gruvbox"
 ```
 
-## Usage on lvim
+- colorscheme
+
+```config.lua
+lvim.colorscheme = "gruvbox"
+```
 
 ```vim
 :PackerInstall
