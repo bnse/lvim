@@ -62,6 +62,7 @@ lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+lvim.builtin.terminal.shell = "bash --rcfile ~/.profile"
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
@@ -187,12 +188,11 @@ lvim.plugins = {
     'christoomey/vim-tmux-navigator',
   },
   {
-    'simrat39/symbols-outline.nvim',
+    "simrat39/symbols-outline.nvim",
     cmd = "SymbolsOutline",
     config = function()
-      require("symbols-outline").setup()
-
-    end,
+      require('symbols-outline').setup()
+    end
   },
   {
     "norcalli/nvim-colorizer.lua",
@@ -207,6 +207,9 @@ lvim.plugins = {
         css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
       })
     end,
+  },
+  {
+    "AndrewRadev/tagalong.vim",
   }
 }
 
