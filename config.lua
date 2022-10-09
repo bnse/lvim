@@ -43,6 +43,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
+lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", ".cache", "%.o", "%.a", "%.out" }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
