@@ -165,7 +165,7 @@ formatters.setup {
 lvim.plugins = {
   { "ellisonleao/gruvbox.nvim" },
   -- { "marko-cerovac/material.nvim" },
-  -- { "folke/tokyonight.nvim" },
+  { "folke/tokyonight.nvim" },
   -- { "sainnhe/sonokai" },
 
   {
@@ -179,6 +179,9 @@ lvim.plugins = {
     "mattn/vim-gist",
     event = "BufRead",
     requires = "mattn/webapi-vim",
+  },
+  {
+    "fatih/vim-go",
   },
   {
     'nkrkv/nvim-treesitter-rescript',
@@ -212,6 +215,20 @@ lvim.plugins = {
   },
   {
     "AndrewRadev/tagalong.vim",
+  },
+  {
+    'edolphin-ydf/goimpl.nvim',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-lua/popup.nvim' },
+    },
+    config = function()
+      require 'telescope'.load_extension 'goimpl'
+    end
+  },
+  {
+    'liuchengxu/graphviz.vim',
+
   }
 }
 
@@ -317,3 +334,17 @@ lvim.builtin.which_key.mappings.l = vim.tbl_extend("keep", lvim.builtin.which_ke
     o = { "<cmd>SymbolsOutline<cr>", "Open Outline" }
   }
 )
+vim.api.nvim_set_keymap('n', '<leader>i', [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+  { noremap = true, silent = true })
+
+-- If does not exist, graphviz.vim will automatically choose the right way depending on the platform.
+-- {svg viewer Gapplin install from AppStore, Preferences... -> { Auto-Redraw(selected), External editor:(vimr) }
+-- {pdf viewer `brew install skim`, Preferences -> Check for file changes -> Reload automatically(selected)}
+vim.g.graphviz_viewer = 'open'
+-- Options passed on to dot. Default is ''.
+vim.g.graphviz_shell_option = ''
+-- `.format` is 'pdf' by default.
+-- Option: 'ps', 'pdf', 'png', 'jpg', 'gif', 'svg'
+vim.g.graphviz_output_format = 'svg'
+vim.api.nvim_set_keymap('n', '<leader>g', [[<cmd>GraphvizCompile<CR>]],
+  { noremap = true, silent = true })
