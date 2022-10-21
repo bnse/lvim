@@ -11,7 +11,6 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "gruvbox"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -43,7 +42,6 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
-lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/", ".cache", "%.o", "%.a", "%.out" }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -140,7 +138,7 @@ formatters.setup {
     extra_args = { "--print-with", "100" },
     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
     -- filetypes = { "css", "typescript", "typescriptreact" },
-    filetypes = { "css" },
+    filetypes = { "css", "dot", "graphviz" },
   },
 }
 
@@ -164,8 +162,8 @@ formatters.setup {
 
 lvim.plugins = {
   { "ellisonleao/gruvbox.nvim" },
+  -- { "folke/tokyonight.nvim" },
   -- { "marko-cerovac/material.nvim" },
-  { "folke/tokyonight.nvim" },
   -- { "sainnhe/sonokai" },
 
   {
@@ -217,21 +215,10 @@ lvim.plugins = {
     "AndrewRadev/tagalong.vim",
   },
   {
-    'edolphin-ydf/goimpl.nvim',
-    requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-lua/popup.nvim' },
-    },
-    config = function()
-      require 'telescope'.load_extension 'goimpl'
-    end
-  },
-  {
     'liuchengxu/graphviz.vim',
 
   }
 }
-
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = { "css", "scss" },
 --   -- enable wrap mode for json files only
@@ -334,8 +321,6 @@ lvim.builtin.which_key.mappings.l = vim.tbl_extend("keep", lvim.builtin.which_ke
     o = { "<cmd>SymbolsOutline<cr>", "Open Outline" }
   }
 )
-vim.api.nvim_set_keymap('n', '<leader>i', [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
-  { noremap = true, silent = true })
 
 -- If does not exist, graphviz.vim will automatically choose the right way depending on the platform.
 -- {svg viewer Gapplin install from AppStore, Preferences... -> { Auto-Redraw(selected), External editor:(vimr) }
@@ -348,3 +333,12 @@ vim.g.graphviz_shell_option = ''
 vim.g.graphviz_output_format = 'svg'
 vim.api.nvim_set_keymap('n', '<leader>g', [[<cmd>GraphvizCompile<CR>]],
   { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>i', [[<cmd>GoImpl<CR>]],
+  { noremap = true, silent = false })
+
+-- lvim.lsp.diagnostics.virtual_text = false
+
+lvim.colorscheme = "gruvbox"
+lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/", ".cache", "%.o", "%.a", "%.out" }
+vim.g.go_alternate_mode = "edit"
