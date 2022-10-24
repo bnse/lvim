@@ -217,6 +217,10 @@ lvim.plugins = {
   {
     'liuchengxu/graphviz.vim',
 
+  },
+  {
+    -- 'nvim-lua/plenary.nvim',
+    'akinsho/flutter-tools.nvim',
   }
 }
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -331,14 +335,35 @@ vim.g.graphviz_shell_option = ''
 -- `.format` is 'pdf' by default.
 -- Option: 'ps', 'pdf', 'png', 'jpg', 'gif', 'svg'
 vim.g.graphviz_output_format = 'svg'
-vim.api.nvim_set_keymap('n', '<leader>g', [[<cmd>GraphvizCompile<CR>]],
+vim.api.nvim_set_keymap('n', '<localleader>g', [[<cmd>GraphvizCompile<CR>]],
   { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>i', [[<cmd>GoImpl<CR>]],
+vim.api.nvim_set_keymap('n', '<localleader>i', [[<cmd>GoImpl<CR>]],
   { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<localleader>t', [[<cmd>ToggleTerm<CR>]],
+  { noremap = true, silent = true })
+
 
 -- lvim.lsp.diagnostics.virtual_text = false
 
 lvim.colorscheme = "gruvbox"
 lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/", ".cache", "%.o", "%.a", "%.out" }
 vim.g.go_alternate_mode = "edit"
+
+require("telescope").load_extension("flutter")
+vim.api.nvim_set_keymap('n', '<localleader>f', [[<cmd>Telescope flutter commands<CR>]],
+  { noremap = true, silent = true })
+
+-- require("flutter-tools").setup {} -- use defaults
+-- alternatively you can override the default configs
+require("flutter-tools").setup {
+  flutter_lookup_cmd = nil, -- example "dirname $(which flutter)" or "asdf where flutter"
+  vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = args.buf })
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = args.buf })
+      vim.keymap.set('n', 'ca', vim.lsp.buf.code_action, { buffer = args.buf })
+    end,
+  })
+
+}
