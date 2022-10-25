@@ -174,9 +174,11 @@ lvim.plugins = {
     -- end
   },
   {
+    "mattn/webapi-vim",
+  },
+  {
     "mattn/vim-gist",
     event = "BufRead",
-    requires = "mattn/webapi-vim",
   },
   {
     "fatih/vim-go",
@@ -344,7 +346,7 @@ vim.api.nvim_set_keymap('n', '<localleader>t', [[<cmd>ToggleTerm<CR>]],
   { noremap = true, silent = true })
 
 
--- lvim.lsp.diagnostics.virtual_text = false
+lvim.lsp.diagnostics.virtual_text = true
 
 lvim.colorscheme = "gruvbox"
 lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/", ".cache", "%.o", "%.a", "%.out" }
@@ -352,6 +354,8 @@ vim.g.go_alternate_mode = "edit"
 
 require("telescope").load_extension("flutter")
 vim.api.nvim_set_keymap('n', '<localleader>f', [[<cmd>Telescope flutter commands<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<localleader>fo', [[<cmd>FlutterOutlineToggle<CR>]],
   { noremap = true, silent = true })
 
 -- require("flutter-tools").setup {} -- use defaults
@@ -365,5 +369,4 @@ require("flutter-tools").setup {
       vim.keymap.set('n', 'ca', vim.lsp.buf.code_action, { buffer = args.buf })
     end,
   })
-
 }
