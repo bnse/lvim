@@ -1,0 +1,18 @@
+{
+  "dot graphviz": {
+    "prefix": "dot",
+    "body": [
+      "digraph ${1} {",
+      "\tsplines=\"FALSE\";",
+      "\t${2}",
+      "\t/* Entities */",
+      "\t${3}",
+      "\t/* Relationships */",
+      "\t${4}",
+      "\t/* Ranks */",
+      "\t${5}",
+      "}"
+    ],
+    "description": "dot graphviz"
+  }
+}

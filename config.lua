@@ -59,7 +59,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.shell = "bash --rcfile ~/.profile"
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -179,6 +179,18 @@ lvim.plugins = {
   {
     "mattn/vim-gist",
     event = "BufRead",
+  },
+  {
+    'edolphin-ydf/goimpl.nvim',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-lua/popup.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
+      { 'nvim-treesitter/nvim-treesitter' },
+    },
+    config = function()
+      require 'telescope'.load_extension 'goimpl'
+    end,
   },
   {
     "fatih/vim-go",
@@ -337,11 +349,9 @@ vim.g.graphviz_shell_option = ''
 -- `.format` is 'pdf' by default.
 -- Option: 'ps', 'pdf', 'png', 'jpg', 'gif', 'svg'
 vim.g.graphviz_output_format = 'svg'
-vim.api.nvim_set_keymap('n', '<localleader>g', [[<cmd>GraphvizCompile<CR>]],
+vim.api.nvim_set_keymap('n', '<localleader>bg', [[<cmd>GraphvizCompile<CR>]],
   { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<localleader>i', [[<cmd>GoImpl<CR>]],
-  { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<localleader>t', [[<cmd>ToggleTerm<CR>]],
   { noremap = true, silent = true })
 
@@ -353,9 +363,9 @@ lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/
 vim.g.go_alternate_mode = "edit"
 
 require("telescope").load_extension("flutter")
-vim.api.nvim_set_keymap('n', '<localleader>f', [[<cmd>Telescope flutter commands<CR>]],
+vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>Telescope flutter commands<CR>]],
   { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<localleader>fo', [[<cmd>FlutterOutlineToggle<CR>]],
+vim.api.nvim_set_keymap('n', '<leader>fo', [[<cmd>FlutterOutlineToggle<CR>]],
   { noremap = true, silent = true })
 
 -- require("flutter-tools").setup {} -- use defaults
@@ -370,3 +380,17 @@ require("flutter-tools").setup {
     end,
   })
 }
+vim.api.nvim_set_keymap('n', '<leader>g', [[Go]],
+  { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>gi', [[<cmd>GoImpl<CR>]],
+--   { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ga', [[<cmd>GoAlternate!<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gr', [[<cmd>GoRename<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gt', [[:GoAddTags ]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gf', [[<cmd>GoFillStruct<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gm', [[<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>]],
+  { noremap = true, silent = true })
