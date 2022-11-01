@@ -196,6 +196,9 @@ lvim.plugins = {
     "fatih/vim-go",
   },
   {
+    'ibhagwan/fzf-lua'
+  },
+  {
     'nkrkv/nvim-treesitter-rescript',
   },
   {
@@ -235,8 +238,44 @@ lvim.plugins = {
   {
     -- 'nvim-lua/plenary.nvim',
     'akinsho/flutter-tools.nvim',
+  },
+  {
+    "brymer-meneses/grammar-guard.nvim",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "williamboman/nvim-lsp-installer"
+    }
   }
 }
+require 'lspconfig'.bufls.setup {}
+vim.api.nvim_set_keymap('n', '<c-P>',
+  "<cmd>lua require('fzf-lua').files()<CR>",
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<c-I>',
+  "<cmd>FzfLua<CR>",
+  { noremap = true, silent = true })
+
+require("grammar-guard").init()
+-- setup LSP config
+require("lspconfig").grammar_guard.setup({
+  cmd = { '/Users/bantana/.local/share/nvim/lsp_servers/ltex/ltex-ls/bin/ltex-ls' }, -- add this if you install ltex-ls yourself
+  settings = {
+    ltex = {
+      enabled = { "latex", "tex", "bib", "markdown" },
+      language = "en",
+      diagnosticSeverity = "information",
+      setenceCacheSize = 2000,
+      additionalRules = {
+        enablePickyRules = true,
+        motherTongue = "en",
+      },
+      trace = { server = "verbose" },
+      dictionary = {},
+      disabledRules = {},
+      hiddenFalsePositives = {},
+    },
+  },
+})
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = { "css", "scss" },
 --   -- enable wrap mode for json files only
@@ -358,7 +397,8 @@ vim.api.nvim_set_keymap('n', '<localleader>t', [[<cmd>ToggleTerm<CR>]],
 
 lvim.lsp.diagnostics.virtual_text = true
 
-lvim.colorscheme = "gruvbox"
+
+lvim.colorscheme = "tokyonight-moon"
 lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules/", ".cache", "%.o", "%.a", "%.out" }
 vim.g.go_alternate_mode = "edit"
 
