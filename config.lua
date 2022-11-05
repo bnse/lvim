@@ -256,12 +256,11 @@ vim.api.nvim_set_keymap('n', '<c-I>',
   { noremap = true, silent = true })
 
 require("grammar-guard").init()
--- setup LSP config
-require("lspconfig").grammar_guard.setup({
-  cmd = { '/Users/bantana/.local/share/nvim/lsp_servers/ltex/ltex-ls/bin/ltex-ls' }, -- add this if you install ltex-ls yourself
+require("lspconfig").grammar_guard.setup {
+  cmd = { '/Users/bantana/.local/share/nvim/lsp_servers/ltex/ltex-ls/bin/ltex-ls' },
   settings = {
     ltex = {
-      enabled = { "latex", "tex", "bib", "markdown" },
+      enabled = { "latex", "tex", "bib", "markdown", "dot" },
       language = "en",
       diagnosticSeverity = "information",
       setenceCacheSize = 2000,
@@ -270,12 +269,12 @@ require("lspconfig").grammar_guard.setup({
         motherTongue = "en",
       },
       trace = { server = "verbose" },
-      dictionary = {},
+      dictionary = { ['en-US'] = { 'perf', 'ci' }, },
       disabledRules = {},
       hiddenFalsePositives = {},
     },
   },
-})
+}
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = { "css", "scss" },
 --   -- enable wrap mode for json files only
@@ -309,7 +308,7 @@ local lspconfig = require("lspconfig")
 lspconfig.emmet_ls.setup({
   -- capabilities = capabilities,
   -- on_attach = on_attach,
-  filetypes = { "html", "css", "javascript", "typescriptreact", "javascriptreact" },
+  filetypes = { "html", "css", "javascript", "typescriptreact", "javascriptreact", "terraform" },
 })
 
 local opts = {
