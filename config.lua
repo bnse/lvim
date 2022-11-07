@@ -173,13 +173,13 @@ lvim.plugins = {
     --   vim.o.timeoutlen = 500
     -- end
   },
-  {
-    "mattn/webapi-vim",
-  },
-  {
-    "mattn/vim-gist",
-    event = "BufRead",
-  },
+  -- {
+  --   "mattn/webapi-vim",
+  -- },
+  -- {
+  --   "mattn/vim-gist",
+  --   event = "BufRead",
+  -- },
   {
     'edolphin-ydf/goimpl.nvim',
     requires = {
@@ -256,7 +256,8 @@ vim.api.nvim_set_keymap('n', '<c-I>',
   { noremap = true, silent = true })
 
 require("grammar-guard").init()
-require("lspconfig").grammar_guard.setup {
+
+require("lspconfig").ltex.setup {
   cmd = { '/Users/bantana/.local/share/nvim/lsp_servers/ltex/ltex-ls/bin/ltex-ls' },
   settings = {
     ltex = {
@@ -269,7 +270,8 @@ require("lspconfig").grammar_guard.setup {
         motherTongue = "en",
       },
       trace = { server = "verbose" },
-      dictionary = { ['en-US'] = { 'perf', 'ci' }, },
+      -- dictionary = { ['en-US'] = { 'perf', 'ci' }, },
+      dictionary = {},
       disabledRules = {},
       hiddenFalsePositives = {},
     },
@@ -378,6 +380,8 @@ lvim.builtin.which_key.mappings.l = vim.tbl_extend("keep", lvim.builtin.which_ke
   }
 )
 
+lvim.lsp.diagnostics.virtual_text = true
+
 -- If does not exist, graphviz.vim will automatically choose the right way depending on the platform.
 -- {svg viewer Gapplin install from AppStore, Preferences... -> { Auto-Redraw(selected), External editor:(vimr) }
 -- {pdf viewer `brew install skim`, Preferences -> Check for file changes -> Reload automatically(selected)}
@@ -392,9 +396,6 @@ vim.api.nvim_set_keymap('n', '<localleader>bg', [[<cmd>GraphvizCompile<CR>]],
 
 vim.api.nvim_set_keymap('n', '<localleader>t', [[<cmd>ToggleTerm<CR>]],
   { noremap = true, silent = true })
-
-
-lvim.lsp.diagnostics.virtual_text = true
 
 
 lvim.colorscheme = "tokyonight-moon"
@@ -419,6 +420,7 @@ require("flutter-tools").setup {
     end,
   })
 }
+
 vim.api.nvim_set_keymap('n', '<leader>g', [[Go]],
   { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>gi', [[<cmd>GoImpl<CR>]],
