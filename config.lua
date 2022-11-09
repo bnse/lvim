@@ -65,6 +65,34 @@ lvim.builtin.terminal.shell = "bash --rcfile ~/.profile"
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
+-- This is required to not have cue files marked as `cuesheet`
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.cue" },
+  command = "set filetype=cue",
+})
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.cue = {
+  install_info = {
+    url = "https://github.com/eonpatapon/tree-sitter-cue", -- local path or git repo
+    files = { "src/parser.c", "src/scanner.c" },
+    branch = "main"
+  },
+  filetype = "cue", -- if filetype does not agrees with parser name
+}
+
+-- treesitter.setup {
+--   ensure_installed = {
+--     "cue",
+--   }
+-- }
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "cue",
+--   callback = function()
+--     require("nvim-treesitter.highlight").attach(0, "cue")
+--   end,
+-- })
+
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -79,6 +107,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "rust",
   "java",
   "yaml",
+  "cue",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -374,6 +403,9 @@ local opts = {
     TypeParameter = { icon = "𝙏", hl = "TSParameter" }
   }
 }
+
+require("lvim.lsp.manager").setup("pyright", opts)
+
 lvim.builtin.which_key.mappings.l = vim.tbl_extend("keep", lvim.builtin.which_key.mappings.l,
   {
     o = { "<cmd>SymbolsOutline<cr>", "Open Outline" }
