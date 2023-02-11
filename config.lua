@@ -127,6 +127,9 @@ lvim.builtin.treesitter.auto_install = true
 -- }
 lvim.plugins = {
     {
+        -- "folke/tokyonight.nvim",
+    },
+    {
         "tpope/vim-surround",
     },
     {
@@ -162,7 +165,8 @@ lvim.plugins = {
     },
     {
         'edolphin-ydf/goimpl.nvim',
-        requires = {
+        -- requires = {
+        dependencies = {
             { 'nvim-lua/plenary.nvim' }, { 'nvim-lua/popup.nvim' },
             { 'nvim-telescope/telescope.nvim' },
             { 'nvim-treesitter/nvim-treesitter' }
@@ -181,7 +185,8 @@ lvim.plugins = {
     },
     {
         "brymer-meneses/grammar-guard.nvim",
-        requires = {
+        -- requires = {
+        dependencies = {
             "neovim/nvim-lspconfig",
             "williamboman/nvim-lsp-installer"
         }
