@@ -1,0 +1,29 @@
+{
+  "name": "friendly-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/js-react.json"
+      },
+      {
+        "language": [
+          "javascript",
+          "javascriptreact"
+        ],
+        "path": "./snippets/javascript.json"
+      },
+      {
+        "language": "dot",
+        "path": "./snippets/dot.json"
+      },
+      {
+        "language": "go",
+        "path": "./snippets/go.json"
+      }
+    ]
+  }
+}

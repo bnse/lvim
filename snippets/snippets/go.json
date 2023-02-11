@@ -1,0 +1,26 @@
+{
+  "NewFunction": {
+    "prefix": "nf",
+    "body": [
+      "func $1($2) $3 {",
+      "\tpanic(\"not implemented\") \/\/  TODO: Implement",
+      "}",
+      "$4"
+    ],
+    "description": "Snippet for Create NewFunction"
+  },
+  "TODO": {
+    "prefix": "todo",
+    "body": [
+      "// TODO: Implement"
+    ],
+    "description": "TODO: Implement"
+  },
+  "noimpl": {
+    "prefix": "noimpl",
+    "body": [
+      "panic(\"not implemented\") // TODO: Implement"
+    ],
+    "description": "panic and todo message"
+  }
+}

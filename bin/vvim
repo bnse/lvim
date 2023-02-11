@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/Users/bantana/.vvim/data/lunarvim"}"
+export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/Users/bantana/.vvim/config/nvim"}"
+export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/Users/bantana/.vvim/cache/nvim"}"
+export LUNARVIM_BASE_DIR="${LUNARVIM_BASE_DIR:-"/Users/bantana/.vvim/data/lunarvim/lvim"}"
+XDG_CONFIG_HOME=/Users/bantana/.vvim/config XDG_DATA_HOME=/Users/bantana/.vvim/data XDG_CACHE_HOME=/Users/bantana/.vvim/cache XDG_STATE_HOME=/Users/bantana/.vvim/state exec -a vvim nvim -u "$LUNARVIM_BASE_DIR/init.lua" "$@"
