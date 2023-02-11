@@ -204,7 +204,7 @@ lvim.plugins = {
 require("grammar-guard").init()
 
 require("lspconfig").ltex.setup {
-    cmd = { '/usr/local/bin/ltex-ls' },
+    -- cmd = { '/usr/local/bin/ltex-ls' },
     settings = {
         ltex = {
             enabled = { "latex", "tex", "bib", "markdown", "dot", "slide", "octo" },
