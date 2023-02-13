@@ -44,6 +44,8 @@ lvim.builtin.which_key.mappings["t"] = {
 	b = { "<cmd>ToggleTerm<CR>", "Terminal" },
 	p = { "<cmd>Telescope projects<CR>", "Projects" },
 }
+lvim.builtin.which_key.mappings["="] = { "<cmd>vertical resize +50<cr>", "pane vertical resize +50" }
+lvim.builtin.which_key.mappings["-"] = { "<cmd>vertical resize -50<cr>", "pane vertical resize -50" }
 
 -- -- Change theme settings
 -- lvim.colorscheme = "lunar"
