@@ -334,3 +334,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 	command = "if mode() != 'c' | checktime | endif",
 	pattern = { "*" },
 })
+
+local ft = require("Comment.ft")
+ft.rescript = { "//%s", "/*%s*/" }
