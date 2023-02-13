@@ -99,3 +99,20 @@ lvim.colorscheme = "gruvbox"
 :TSInstall rescript
 :TSUpdate
 ```
+
+
+## brew install related tools
+
+Lua formater:
+
+    brew install stylua
+
+Grammer translater:
+
+    brew install ltex-ls
+
+Lazy git tools:
+
+    brew install lazygit
+
+
