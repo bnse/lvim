@@ -31,6 +31,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.builtin.which_key.mappings["m"] = {
 	m = { "<cmd>SymbolsOutline<CR>", "SymbolsOutline" },
 	g = { "<cmd>GraphvizCompile<CR>", "GraphvizCompile" },
+	e = { "<cmd>LeanInfoviewToggle<CR>", "LeanInfoviewToggle" },
 }
 lvim.builtin.which_key.mappings["o"] = {
 	name = "octo",
@@ -219,7 +220,7 @@ require("lspconfig").ltex.setup({
 	-- cmd = { '/usr/local/bin/ltex-ls' },
 	settings = {
 		ltex = {
-			enabled = { "latex", "tex", "bib", "markdown", "dot", "slide", "article", "octo" },
+			enabled = { "latex", "org", "tex", "bib", "markdown", "dot", "slide", "article", "octo" },
 			language = "en",
 			diagnosticSeverity = "information",
 			setenceCacheSize = 2000,
@@ -228,8 +229,9 @@ require("lspconfig").ltex.setup({
 				motherTongue = "en",
 			},
 			trace = { server = "verbose" },
-			-- dictionary = { ['en-US'] = { 'perf', 'ci' }, },
-			dictionary = {},
+			flags = { debounce_text_changes = 300 },
+			dictionary = { ["en-US"] = { "perf", "ci" } },
+			-- dictionary = {},
 			disabledRules = {},
 			hiddenFalsePositives = {},
 		},
@@ -237,6 +239,10 @@ require("lspconfig").ltex.setup({
 })
 
 require("lvim.lsp.manager").setup("emmet_ls")
+local lspconfig = require("lspconfig")
+lspconfig.emmet_ls.setup({
+	filetypes = { "html", "rescript", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+})
 
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.shell = "bash --rcfile ~/.profile"
