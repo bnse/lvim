@@ -1,0 +1,28 @@
+{
+  "article header": {
+    "prefix": "article",
+    "body": [
+      "---",
+      "title: ${1}",
+      "date: ",
+      "by:",
+      "- Nie Qianqian",
+      "tags:",
+      "- article",
+      "summary: ${2}",
+      "---",
+      "",
+      "## Introduction",
+    ],
+    "description": "golang article"
+  },
+  "ReScript code block": {
+    "prefix": "rescode",
+    "body": [
+      "```rescript",
+      "$0",
+      "```"
+    ],
+    "description": "Insert rescript code block"
+  },
+}

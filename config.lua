@@ -105,11 +105,13 @@ local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
 	{ command = "goimports", filetypes = { "go" } },
 	{ command = "gofumpt", filetypes = { "go" } },
+	{ command = "black", filetypes = { "python" } },
 	-- { command = "lua-format", filetypes = { "lua" } },
 	{ command = "stylua", filetypes = { "lua" } },
 	{ command = "prettier", filetypes = { "dot" } },
 	-- { command = "format_lean", filetypes = { "lean" } },
 })
+
 lvim.format_on_save = { pattern = { "*.go" } }
 -- lvim.format_on_save = {pattern = {"*.go"}}
 lvim.format_on_save = true
@@ -131,9 +133,6 @@ lvim.format_on_save = true
 --     },
 -- }
 lvim.plugins = {
-	{
-		-- "folke/tokyonight.nvim",
-	},
 	{
 		"tpope/vim-surround",
 	},
@@ -190,14 +189,14 @@ lvim.plugins = {
 	{
 		"ellisonleao/gruvbox.nvim",
 	},
-	{
-		"brymer-meneses/grammar-guard.nvim",
-		-- requires = {
-		dependencies = {
-			"neovim/nvim-lspconfig",
-			"williamboman/nvim-lsp-installer",
-		},
-	},
+	-- {
+	-- 	"brymer-meneses/grammar-guard.nvim",
+	-- 	-- requires = {
+	-- 	dependencies = {
+	-- 		"neovim/nvim-lspconfig",
+	-- 		"williamboman/nvim-lsp-installer",
+	-- 	},
+	-- },
 	-- {
 	--     "bantana/vim-present",
 	-- },
@@ -213,11 +212,33 @@ lvim.plugins = {
 		-- 	"andrewradev/switch.vim",
 		-- },
 	},
+	{
+		"barreiroleo/ltex-extra.nvim",
+		-- 	-- requires = {
+		-- 	dependencies = {
+		-- 		"neovim/nvim-lspconfig",
+		-- 		"williamboman/nvim-lsp-installer",
+		-- 	},
+	},
 }
-require("grammar-guard").init()
+-- require("grammar-guard").init()
 
+require("lspconfig").marksman.setup({
+	-- cmd = { "/usr/local/bin/marksman" },
+	-- filetypes = { "md", "markdown" },
+})
 require("lspconfig").ltex.setup({
 	-- cmd = { '/usr/local/bin/ltex-ls' },
+	capabilities = your_capabilities,
+	on_attach = function(client, bufnr)
+		-- your other on_attach functions.
+		require("ltex_extra").setup({
+			load_langs = { "es-AR", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
+			init_check = true, -- boolean : whether to load dictionaries on startup
+			path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+			log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+		})
+	end,
 	settings = {
 		ltex = {
 			enabled = { "latex", "org", "tex", "bib", "markdown", "dot", "slide", "article", "octo" },
@@ -232,7 +253,8 @@ require("lspconfig").ltex.setup({
 			flags = { debounce_text_changes = 300 },
 			dictionary = { ["en-US"] = { "perf", "ci" } },
 			-- dictionary = {},
-			disabledRules = {},
+			-- disabledRules = {},
+			disabledRules = { ["en"] = { "EN_QUOTES" } },
 			hiddenFalsePositives = {},
 		},
 	},
@@ -241,7 +263,16 @@ require("lspconfig").ltex.setup({
 require("lvim.lsp.manager").setup("emmet_ls")
 local lspconfig = require("lspconfig")
 lspconfig.emmet_ls.setup({
-	filetypes = { "html", "rescript", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+	-- filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+	init_options = {
+		html = {
+			options = {
+				-- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+				["bem.enabled"] = true,
+			},
+		},
+	},
 })
 
 lvim.builtin.terminal.active = true
@@ -324,7 +355,7 @@ lvim.builtin.indentlines.options.enabled = false
 
 vim.opt.textwidth = 80
 vim.opt.wrapmargin = 1
-vim.opt.colorcolumn = "-2"
+-- vim.opt.colorcolumn = "-2"
 
 lvim.reload_config_on_save = false
 
@@ -339,6 +370,11 @@ vim.filetype.add({
 vim.filetype.add({
 	extension = {
 		article = "markdown",
+	},
+})
+vim.filetype.add({
+	extension = {
+		mdx = "markdown",
 	},
 })
 
@@ -432,3 +468,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	virtual_text = { spacing = 4 },
 	update_in_insert = true,
 })
+vim.cmd([[au VimEnter * highlight Normal ctermbg=none ctermfg=none guifg=none guibg=none]])
+-- vim.cmd([[au VimEnter * highlight LineNr ctermbg=none ctermfg=none guifg=none guibg=none]])
+vim.cmd([[au VimEnter * highlight NormalFloat ctermbg=none ctermfg=none guifg=none guibg=none]])
