@@ -7,6 +7,12 @@
     "snippets": [
       {
         "language": [
+          "all"
+        ],
+        "path": "./all.json"
+      },
+      {
+        "language": [
           "javascript",
           "javascriptreact"
         ],
@@ -23,6 +29,10 @@
       {
         "language": "markdown",
         "path": "./markdown.json"
+      },
+      {
+        "language": "zig",
+        "path": "./zig.json"
       }
     ]
   }

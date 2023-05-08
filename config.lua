@@ -22,14 +22,21 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
--- -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["a"] = {
+	name = "git conflict command",
+	m = { "<cmd>GitConflictChooseTheirs<CR>", "Mine" },
+	t = { "<cmd>GitConflictChooseOurs<CR>", "Theirs" },
+	n = { "<cmd>GitConflictChooseNone<CR>", "None" },
+	b = { "<cmd>GitConflictChooseBoth<CR>", "Both" },
+	j = { "<cmd>GitConflictNextConflict<CR>", "Next" },
+	k = { "<cmd>GitConflictPrevConflict<CR>", "Prev" },
+	r = { "<cmd>GitConflictRefresh<CR>", "Refresh" },
+	q = { "<cmd>GitConflictListQf<CR>", "Quickfix" },
+}
 lvim.builtin.which_key.mappings["m"] = {
+	name = "make",
 	m = { "<cmd>SymbolsOutline<CR>", "SymbolsOutline" },
+	l = { "<cmd>TexlabBuild<CR>", "TexlabBuild" },
 	g = { "<cmd>GraphvizCompile<CR>", "GraphvizCompile" },
 	e = { "<cmd>LeanInfoviewToggle<CR>", "LeanInfoviewToggle" },
 }
@@ -109,6 +116,7 @@ formatters.setup({
 	-- { command = "lua-format", filetypes = { "lua" } },
 	{ command = "stylua", filetypes = { "lua" } },
 	{ command = "prettier", filetypes = { "dot" } },
+	-- { command = "remark", filetypes = { "markdown" } },
 	-- { command = "format_lean", filetypes = { "lean" } },
 })
 
@@ -134,13 +142,29 @@ lvim.format_on_save = true
 -- }
 lvim.plugins = {
 	{
+		"sindrets/diffview.nvim",
+	},
+	{
+		"akinsho/git-conflict.nvim",
+		config = function()
+			require("git-conflict").setup()
+		end,
+	},
+	{ "ziglang/zig.vim" },
+	{ "bufbuild/vim-buf" },
+	{
+		-- "SeniorMars/tree-sitter-typst",
+		"SeniorMars/typst.nvim",
+		"kaarmu/typst.vim",
+	},
+	{
 		"tpope/vim-surround",
 	},
 	{
 		"christoomey/vim-tmux-navigator",
 	},
 	{
-		"rescript-lang/vim-rescript",
+		-- "rescript-lang/vim-rescript",
 		"nkrkv/nvim-treesitter-rescript",
 	},
 	{
@@ -165,23 +189,23 @@ lvim.plugins = {
 		end,
 	},
 	{
+		"fatih/vim-go",
+	},
+	{
 		"olexsmir/gopher.nvim",
 	},
 	{
 		"edolphin-ydf/goimpl.nvim",
 		-- requires = {
 		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-lua/popup.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" },
+			-- { "nvim-lua/plenary.nvim" },
+			-- { "nvim-lua/popup.nvim" },
+			-- { "nvim-telescope/telescope.nvim" },
+			-- { "nvim-treesitter/nvim-treesitter" },
 		},
 		config = function()
 			require("telescope").load_extension("goimpl")
 		end,
-	},
-	{
-		"fatih/vim-go",
 	},
 	{
 		"liuchengxu/graphviz.vim",
@@ -189,17 +213,6 @@ lvim.plugins = {
 	{
 		"ellisonleao/gruvbox.nvim",
 	},
-	-- {
-	-- 	"brymer-meneses/grammar-guard.nvim",
-	-- 	-- requires = {
-	-- 	dependencies = {
-	-- 		"neovim/nvim-lspconfig",
-	-- 		"williamboman/nvim-lsp-installer",
-	-- 	},
-	-- },
-	-- {
-	--     "bantana/vim-present",
-	-- },
 	{
 		"pwntester/octo.nvim",
 		config = function()
@@ -208,57 +221,48 @@ lvim.plugins = {
 	},
 	{
 		"Julian/lean.nvim",
-		-- dependencies = {
-		-- 	"andrewradev/switch.vim",
-		-- },
 	},
 	{
 		"barreiroleo/ltex-extra.nvim",
-		-- 	-- requires = {
-		-- 	dependencies = {
-		-- 		"neovim/nvim-lspconfig",
-		-- 		"williamboman/nvim-lsp-installer",
-		-- 	},
 	},
 }
--- require("grammar-guard").init()
 
 require("lspconfig").marksman.setup({
 	-- cmd = { "/usr/local/bin/marksman" },
 	-- filetypes = { "md", "markdown" },
 })
-require("lspconfig").ltex.setup({
-	-- cmd = { '/usr/local/bin/ltex-ls' },
-	capabilities = your_capabilities,
-	on_attach = function(client, bufnr)
-		-- your other on_attach functions.
-		require("ltex_extra").setup({
-			load_langs = { "es-AR", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
-			init_check = true, -- boolean : whether to load dictionaries on startup
-			path = nil, -- string : path to store dictionaries. Relative path uses current working directory
-			log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
-		})
-	end,
-	settings = {
-		ltex = {
-			enabled = { "latex", "org", "tex", "bib", "markdown", "dot", "slide", "article", "octo" },
-			language = "en",
-			diagnosticSeverity = "information",
-			setenceCacheSize = 2000,
-			additionalRules = {
-				enablePickyRules = true,
-				motherTongue = "en",
-			},
-			trace = { server = "verbose" },
-			flags = { debounce_text_changes = 300 },
-			dictionary = { ["en-US"] = { "perf", "ci" } },
-			-- dictionary = {},
-			-- disabledRules = {},
-			disabledRules = { ["en"] = { "EN_QUOTES" } },
-			hiddenFalsePositives = {},
-		},
-	},
-})
+-- require("lspconfig").ltex.setup({
+-- 	-- cmd = { '/usr/local/bin/ltex-ls' },
+-- 	capabilities = your_capabilities,
+-- 	on_attach = function(client, bufnr)
+-- 		-- your other on_attach functions.
+-- 		require("ltex_extra").setup({
+-- 			load_langs = { "es-AR", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
+-- 			init_check = true, -- boolean : whether to load dictionaries on startup
+-- 			path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+-- 			log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+-- 		})
+-- 	end,
+-- 	settings = {
+-- 		ltex = {
+-- 			enabled = { "latex", "org", "tex", "typst", "bib", "markdown", "dot", "slide", "article", "octo" },
+-- 			language = "en",
+-- 			diagnosticSeverity = "information",
+-- 			setenceCacheSize = 2000,
+-- 			additionalRules = {
+-- 				enablePickyRules = true,
+-- 				motherTongue = "en",
+-- 			},
+-- 			trace = { server = "verbose" },
+-- 			flags = { debounce_text_changes = 300 },
+-- 			dictionary = { ["en-US"] = { "perf", "ci" } },
+-- 			-- dictionary = {},
+-- 			-- disabledRules = {},
+-- 			disabledRules = { ["en"] = { "EN_QUOTES" } },
+-- 			hiddenFalsePositives = {},
+-- 		},
+-- 	},
+-- })
 
 require("lvim.lsp.manager").setup("emmet_ls")
 local lspconfig = require("lspconfig")
@@ -318,7 +322,7 @@ lvim.builtin.which_key.mappings["G"] = {
 	t = {
 		name = "Test",
 		a = { "<cmd>GoAlternate<cr>", "Add Test" },
-		s = { "<cmd>GoTestsAll<cr>", "Add All Tests" },
+		g = { "<cmd>GoTestsAll<cr>", "Add All Tests" },
 		e = { "<cmd>GoTestsExp<Cr>", "Add Exported Tests" },
 		f = { "<cmd>GoTestFunc<CR>", "GoTestFunc" },
 	},
@@ -396,21 +400,21 @@ ft.rescript = { "//%s", "/*%s*/" }
 vim.opt.signcolumn = "yes:1"
 
 -- Enable nvim-cmp, with 3 completion sources, including LSP
-local cmp = require("cmp")
-cmp.setup({
-	mapping = cmp.mapping.preset.insert({
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "path" },
-		{ name = "buffer" },
-	}),
-})
+-- local cmp = require("cmp")
+-- cmp.setup({
+-- 	mapping = cmp.mapping.preset.insert({
+-- 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+-- 		["<C-f>"] = cmp.mapping.scroll_docs(4),
+-- 		["<C-Space>"] = cmp.mapping.complete(),
+-- 		["<C-e>"] = cmp.mapping.abort(),
+-- 		["<CR>"] = cmp.mapping.confirm({ select = true }),
+-- 	}),
+-- 	sources = cmp.config.sources({
+-- 		{ name = "nvim_lsp" },
+-- 		{ name = "path" },
+-- 		{ name = "buffer" },
+-- 	}),
+-- })
 
 -- You may want to reference the nvim-cmp documentation for further
 -- configuration of completion: https://github.com/hrsh7th/nvim-cmp#recommended-configuration
@@ -471,3 +475,57 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 vim.cmd([[au VimEnter * highlight Normal ctermbg=none ctermfg=none guifg=none guibg=none]])
 -- vim.cmd([[au VimEnter * highlight LineNr ctermbg=none ctermfg=none guifg=none guibg=none]])
 vim.cmd([[au VimEnter * highlight NormalFloat ctermbg=none ctermfg=none guifg=none guibg=none]])
+
+-- texlab for chinese
+require("lspconfig").texlab.setup({
+	{
+		texlab = {
+			auxDirectory = ".",
+			bibtexFormatter = "texlab",
+			build = {
+				args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+				executable = "pdflatex",
+				forwardSearchAfter = true,
+				onSave = true,
+			},
+			chktex = {
+				onEdit = false,
+				onOpenAndSave = false,
+			},
+			diagnosticsDelay = 300,
+			formatterLineLength = 80,
+			forwardSearch = {
+				args = {},
+			},
+			latexFormatter = "latexindent",
+			latexindent = {
+				modifyLineBreaks = false,
+			},
+			experimental = {
+				mathEnvironments = {
+					"align*",
+					"equation",
+				},
+				enumEnvironments = {
+					"enumerate",
+					"itemize",
+				},
+			},
+		},
+	},
+})
+
+require("lspconfig").typst_lsp.setup({})
+require("lspconfig").bufls.setup({})
+require("lspconfig").zls.setup({})
+
+require("lspconfig")["clangd"].setup({
+	on_attach = on_attach,
+	-- cmd = { '' }
+	flags = {
+		debounce_text_changes = 150,
+	},
+})
+
+local swiftopt = {}
+require("lvim.lsp.manager").setup("sourcekit", swiftopt)

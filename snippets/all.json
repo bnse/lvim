@@ -1,0 +1,65 @@
+{
+  "lambda": {
+    "prefix": "lambda",
+    "body": [
+      "λ"
+    ],
+    "description": "Greek char lambda λ"
+  },
+  "forall": {
+    "prefix": "forall",
+    "body": [
+      "∀"
+    ],
+    "description": "Greek char exists forall U+2200"
+  },
+  "alpha": {
+    "prefix": "alpha",
+    "body": [
+      "α"
+    ],
+    "description": "Greek char alpha ∃ U+03B1"
+  },
+  "beta": {
+    "prefix": "beta",
+    "body": [
+      "β"
+    ],
+    "description": "Greek char beta ∃ U+03B2"
+  },
+  "eta": {
+    "prefix": "eta",
+    "body": [
+      "η"
+    ],
+    "description": "Greek char beta η"
+  },
+  "omega": {
+    "prefix": "omega",
+    "body": [
+      "ω"
+    ],
+    "description": "Greek char omega ω"
+  },
+  "Omega": {
+    "prefix": "Omega",
+    "body": [
+      "Ω"
+    ],
+    "description": "Greek char Omega Ω"
+  },
+  "exists": {
+    "prefix": "exists",
+    "body": [
+      "∃"
+    ],
+    "description": "Greek char exists ∃ U+2203"
+  },
+  "ident": {
+    "prefix": "ident",
+    "body": [
+      "≡"
+    ],
+    "description": "Greek char ident ≡"
+  }
+}

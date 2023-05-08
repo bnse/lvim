@@ -1,3 +1,4 @@
+brew "alacritty"
 brew "stylua"
 brew "ltex-ls"
 Brew "lazygit"
@@ -11,6 +12,11 @@ brew "wget"
 brew "neovim"
 brew "shellcheck"
 brew "universal-ctags"
+brew "starship"
+brew "git-delta"
+
+brew "font-jetbrains-mono"
+brew "font-jetbrains-mono-nerd-font"
 
 cask "skim"
 cask "alacritty"
